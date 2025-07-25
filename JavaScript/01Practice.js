@@ -1,25 +1,25 @@
 // Syntax of a promise
 
 const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        console.log("A");
-    }, 100);
+  setTimeout(() => {
+    console.log("A");
+  }, 100);
 });
 
 promise
-    .then((result) => {
-        console.log(result);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-function fetchUser(){
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve("User data fetched");
-        }, 1000)
-    });
+function fetchUser() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("User data fetched");
+    }, 1000);
+  });
 }
 
 fetchUser().then(console.log);
@@ -34,19 +34,18 @@ fetchUser().then(console.log);
 //     -> this refers to the global object
 //         in browser it is known as window and
 //         in node js it is global
-             
+
 // 2. Function executon context(FEC)
 //     -> Created everytime when the function is called and had its own arguments, scope and value of this
-    
+
 // What happens when you call a function is js ?
-    
+
 //     -> when we call a function in js then the new FEC is created and pushed onto the call stack and when the function finishes execution then the context is popped out.Context
 
 // // Hoisting
 
 // --> So Hoisting is basically the behaviour of js by which all the variables and function declaration moved on the top of their scope during the compilation phase.
 // But only the declaration are hosited - not initializations.
-        
 
 // Var is hosited but const and let throws Reference errors before declaration
 // const and let are hoisted too but they are placed in a temporal dead zone.
@@ -54,29 +53,62 @@ fetchUser().then(console.log);
 // The time betweent the let and const variable is declared and initialized and during this if we accessing the variable then it results into ReferenceError
 
 function outer() {
-    let name = "vishal";
+  let name = "vishal";
 
-    function inner() {
-        console.log("Hello " + name);
-        
-    }
-    inner()
+  function inner() {
+    console.log("Hello " + name);
+  }
+  inner();
 }
 
-outer()
+outer();
 
 for (var i = 0; i <= 3; i++) {
-    setTimeout(() => {
-        console.log(i);
-    }, 1000)
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
 }
 
 // Here var is function scoped so all the iterations of the loop share the same i and when the setTimeout function is called when the loop has finished executing.
 
 for (let i = 0; i <= 3; i++) {
-    setTimeout(() => {
-        console.log(i);
-    }, 1000)
+  setTimeout(() => {
+    console.log(i);
+  }, 1000);
 }
 
 // here the let is blocked scope so each iteration gets a new i a fresh binding and each setTimeout captures a differet i and each value is preserved properly in its closure.
+
+// this
+
+// in js this refers to the object that is executing the current function.
+
+// global scope
+// console.log(this)
+//     in browser -> window object and in node js -> {}
+
+const person = {
+  name: "hari",
+
+  greet() {
+    console.log(this.name);
+  },
+};
+person.greet();
+
+const person1 = {
+  name: "hari",
+
+  greet: () => {
+    console.log(this.name);
+  },
+};
+person1.greet();
+
+// Arrow function inherit this from their surrounding scope or lexical scope and they should not be used as object methods if you need access to the object via this.
+
+<button onClick="console.log(this)">Click</button>
+
+// here this refer to the button Element
+
+// In a method it refers as object and alone it refers as window or global and in arror function it refers as lexical scope and in constructor it refers as new instance
